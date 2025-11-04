@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sinh viên - QLTT Lớp học</title>
+  <link rel="stylesheet" href="student-dashboard.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">SV</div>
+        <div class="brand-text">
+          <h1>QLTT Lớp học</h1>
+          <p>Quản lý sinh viên</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-section="dashboard">
+          <span>📊</span> Tổng quan
+        </button>
+        <button class="nav-item" data-section="schedule">
+          <span>📅</span> Lịch học
+        </button>
+        <button class="nav-item" data-section="grades">
+          <span>📝</span> Điểm số
+        </button>
+        <button class="nav-item" data-section="attendance">
+          <span>✓</span> Điểm danh
+        </button>
+        <button class="nav-item" data-section="documents">
+          <span>📄</span> Tài liệu
+        </button>
+        <button class="nav-item" data-section="settings">
+          <span>⚙️</span> Cài đặt
+        </button>
+      </nav>
+
+      <div class="profile-section">
+        <div class="profile-info">
+          <div class="avatar" id="studentAvatar">
+            <img id="avatarImg" src="" alt="" style="display:none">
+            <div id="avatarPlaceholder">SV</div>
+          </div>
+          <div>
+            <div class="profile-name" id="studentName">Sinh viên</div>
+            <div class="profile-role" id="studentRole">Sinh viên</div>
+          </div>
+        </div>
+        <button class="logout-btn" id="logoutBtn" type="button">Đăng xuất</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Dashboard Section -->
+      <section id="dashboard-section" class="content-section active">
+        <div class="header">
+          <h2>Tổng quan</h2>
+          <p>Chào mừng trở lại, xem thông tin học tập của bạn</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="avgGrade">8.5</div>
+            <div class="stat-label">Điểm trung bình</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="totalCredits">24</div>
+            <div class="stat-label">Tín chỉ đã học</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="attendanceRate">92.5%</div>
+            <div class="stat-label">Tỷ lệ chuyên cần</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="totalClasses">6</div>
+            <div class="stat-label">Môn học</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Hoạt động gần đây</h3>
+          </div>
+          <div id="recentActivities">
+            <div class="activity-item">
+              <div class="activity-text">Thông báo: Lịch thi học kỳ</div>
+              <div class="activity-time">1 giờ trước</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-text">Giảng viên cập nhật điểm</div>
+              <div class="activity-time">Hôm qua</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-text">Tài liệu mới: Bài giảng Chương 3</div>
+              <div class="activity-time">2 ngày trước</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Lịch học hôm nay</h3>
+          </div>
+          <div id="todaySchedule">
+            <div class="schedule-item">
+              <div class="schedule-title">Lập trình Web</div>
+              <div class="schedule-meta">
+                <span>⏰ 08:00 - 10:00</span>
+                <span>📍 Phòng A101</span>
+                <span>👨‍🏫 TS. Nguyễn Văn Giảng</span>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-title">Cơ sở dữ liệu</div>
+              <div class="schedule-meta">
+                <span>⏰ 13:00 - 15:00</span>
+                <span>📍 Phòng B205</span>
+                <span>👨‍🏫 TS. Trần Thị Hoa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Schedule Section -->
+      <section id="schedule-section" class="content-section">
+        <div class="header">
+          <h2>Lịch học</h2>
+          <p>Xem lịch học theo tuần</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Tuần này</h3>
+            <button class="btn btn-primary" onclick="window.location.href='schedule.html'">📅 Xem lịch đầy đủ</button>
+          </div>
+          <div id="weekSchedule">
+            <div class="schedule-item">
+              <div class="schedule-title">Lập trình Web</div>
+              <div class="schedule-meta">
+                <span>📅 Thứ 2</span>
+                <span>⏰ 08:00 - 10:00</span>
+                <span>📍 Phòng A101</span>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-title">Cơ sở dữ liệu</div>
+              <div class="schedule-meta">
+                <span>📅 Thứ 2</span>
+                <span>⏰ 13:00 - 15:00</span>
+                <span>📍 Phòng B205</span>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-title">Mạng máy tính</div>
+              <div class="schedule-meta">
+                <span>📅 Thứ 3</span>
+                <span>⏰ 08:00 - 10:00</span>
+                <span>📍 Phòng C301</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grades Section -->
+      <section id="grades-section" class="content-section">
+        <div class="header">
+          <h2>Điểm số</h2>
+          <p>Xem điểm số và kết quả học tập</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Điểm số các môn</h3>
+            <button class="btn btn-primary" onclick="window.location.href='grades.html'">📊 Xem chi tiết</button>
+          </div>
+          <div class="grades-list">
+            <div class="grade-item">
+              <div class="grade-info">
+                <h4>Lập trình Web</h4>
+                <p>Học kỳ 2 - 2024</p>
+              </div>
+              <div class="grade-value">8.6</div>
+            </div>
+            <div class="grade-item">
+              <div class="grade-info">
+                <h4>Cơ sở dữ liệu</h4>
+                <p>Học kỳ 2 - 2024</p>
+              </div>
+              <div class="grade-value">8.5</div>
+            </div>
+            <div class="grade-item">
+              <div class="grade-info">
+                <h4>Mạng máy tính</h4>
+                <p>Học kỳ 2 - 2024</p>
+              </div>
+              <div class="grade-value">7.8</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">8.5</div>
+            <div class="stat-label">Điểm TB chung</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">5</div>
+            <div class="stat-label">Môn đã qua</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">2</div>
+            <div class="stat-label">Môn xuất sắc</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Attendance Section -->
+      <section id="attendance-section" class="content-section">
+        <div class="header">
+          <h2>Điểm danh</h2>
+          <p>Theo dõi chuyên cần của bạn</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Tình hình chuyên cần</h3>
+            <button class="btn btn-primary" onclick="window.location.href='attendance.html'">📋 Xem chi tiết</button>
+          </div>
+          
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-value">92.5%</div>
+              <div class="stat-label">Tỷ lệ chuyên cần</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">44</div>
+              <div class="stat-label">Buổi có mặt</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">4</div>
+              <div class="stat-label">Buổi vắng mặt</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <h4 style="margin-bottom: 12px;">Chi tiết theo môn</h4>
+            <div class="grades-list">
+              <div class="grade-item">
+                <div class="grade-info">
+                  <h4>Lập trình Web</h4>
+                  <p>12 buổi có mặt / 13 buổi</p>
+                </div>
+                <span class="badge badge-success">92%</span>
+              </div>
+              <div class="grade-item">
+                <div class="grade-info">
+                  <h4>Cơ sở dữ liệu</h4>
+                  <p>11 buổi có mặt / 12 buổi</p>
+                </div>
+                <span class="badge badge-success">92%</span>
+              </div>
+              <div class="grade-item">
+                <div class="grade-info">
+                  <h4>Mạng máy tính</h4>
+                  <p>10 buổi có mặt / 11 buổi</p>
+                </div>
+                <span class="badge badge-warning">91%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Documents Section -->
+      <section id="documents-section" class="content-section">
+        <div class="header">
+          <h2>Tài liệu</h2>
+          <p>Tài liệu học tập từ giảng viên</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Tài liệu mới nhất</h3>
+          </div>
+          <div class="grades-list">
+            <div class="grade-item">
+              <div class="grade-info">
+                <h4>📚 Bài giảng Chương 1 - Lập trình Web</h4>
+                <p>TS. Nguyễn Văn Giảng • 15/01/2025</p>
+              </div>
+              <button class="btn btn-primary">Xem</button>
+            </div>
+            <div class="grade-item">
+              <div class="grade-info">
+                <h4>📝 Bài tập tuần 1 - Lập trình Web</h4>
+                <p>TS. Nguyễn Văn Giảng • 16/01/2025</p>
+              </div>
+              <button class="btn btn-primary">Xem</button>
+            </div>
+            <div class="grade-item">
+              <div class="grade-info">
+                <h4>📋 Đề cương môn Cơ sở dữ liệu</h4>
+                <p>TS. Trần Thị Hoa • 10/01/2025</p>
+              </div>
+              <button class="btn btn-primary">Xem</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Section -->
+      <section id="settings-section" class="content-section">
+        <div class="header">
+          <h2>Cài đặt</h2>
+          <p>Quản lý thông tin cá nhân</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Thông tin cá nhân</h3>
+            <button class="btn btn-primary" id="editProfileBtn">✏️ Chỉnh sửa</button>
+          </div>
+          <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
+              <div class="form-group">
+                <label>Họ tên</label>
+                <div style="padding: 12px; background: #f9f9f9; border-radius: 8px;" id="displayName">Nguyễn Văn An</div>
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <div style="padding: 12px; background: #f9f9f9; border-radius: 8px;" id="displayEmail">student1@example.com</div>
+              </div>
+              <div class="form-group">
+                <label>Số điện thoại</label>
+                <div style="padding: 12px; background: #f9f9f9; border-radius: 8px;" id="displayPhone">Chưa cập nhật</div>
+              </div>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+              <div class="form-group">
+                <label>Địa chỉ</label>
+                <div style="padding: 12px; background: #f9f9f9; border-radius: 8px;" id="displayAddress">Chưa cập nhật</div>
+              </div>
+              <div class="form-group">
+                <label>Lớp</label>
+                <div style="padding: 12px; background: #f9f9f9; border-radius: 8px;">CNTT-K20A</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Bảo mật</h3>
+          </div>
+          <button class="btn btn-primary" id="changePasswordBtn">🔒 Đổi mật khẩu</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Profile Modal -->
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Chỉnh sửa hồ sơ</h3>
+        <button class="close-btn" data-modal="profileModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <div id="modalAvatar" style="width: 96px; height: 96px; border-radius: 50%; background: var(--primary); margin: 0 auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: 700; overflow: hidden;">
+            <img id="modalAvatarImg" src="" alt="" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+            <div id="modalAvatarPlaceholder">SV</div>
+          </div>
+          <div style="margin-top: 12px;">
+            <label for="avatarInput" class="btn btn-secondary" style="cursor: pointer;">Chọn ảnh</label>
+            <button class="btn btn-secondary" id="removeAvatarBtn">Xóa ảnh</button>
+            <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Họ tên</label>
+          <input type="text" id="modalName" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="modalEmail" class="form-input" readonly>
+        </div>
+        <div class="form-group">
+          <label>Số điện thoại</label>
+          <input type="tel" id="modalPhone" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Địa chỉ</label>
+          <input type="text" id="modalAddress" class="form-input">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-modal="profileModal">Hủy</button>
+        <button class="btn btn-primary" id="saveProfileBtn">Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div id="passwordModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Đổi mật khẩu</h3>
+        <button class="close-btn" data-modal="passwordModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Mật khẩu hiện tại</label>
+          <input type="password" id="currentPassword" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Mật khẩu mới</label>
+          <input type="password" id="newPassword" class="form-input" minlength="8">
+        </div>
+        <div class="form-group">
+          <label>Xác nhận mật khẩu mới</label>
+          <input type="password" id="confirmPassword" class="form-input" minlength="8">
+        </div>
+        <div id="passwordError" style="color: var(--danger); font-size: 14px; display: none;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-modal="passwordModal">Hủy</button>
+        <button class="btn btn-primary" id="savePasswordBtn">Cập nhật</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="student-dashboard.js"></script>
+</body>
+</html>

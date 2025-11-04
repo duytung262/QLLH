@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đặt lại mật khẩu - QLTT_LopHoc</title>
+  <style>
+    :root{
+      --bg-1:#a8e6cf; --accent:#2e7d32; --muted:#6b7280; --danger:#e15858; --card:#fff;
+      --radius:12px; --shadow: 0 10px 30px rgba(16,24,40,0.12);
+    }
+    html,body{ height:100%; margin:0; font-family:Inter, system-ui, Arial; background:linear-gradient(135deg,#a8e6cf,#fff9c4); color:#0f172a; }
+    .wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+    .card{ width:100%; max-width:520px; background:var(--card); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); border:1px solid rgba(16,24,40,0.04);}
+    h1{ margin:0 0 6px 0; font-size:18px; }
+    p{ margin:0 0 12px 0; color:var(--muted); font-size:13px; }
+    .field{ margin-bottom:12px; }
+    input{ width:100%; padding:12px 10px; border-radius:10px; border:1px solid rgba(16,24,40,0.08); }
+    .btn{ padding:10px 14px; border-radius:10px; background:linear-gradient(90deg,var(--accent),#1b5e20); color:#fff; border:none; cursor:pointer; }
+    .btn.secondary{ background:transparent; color:var(--muted); border:1px solid rgba(16,24,40,0.06); }
+    .error{ color:var(--danger); font-size:13px; margin-top:6px; }
+    .help{ color:var(--muted); font-size:13px; }
+    .toast{ position:fixed; left:50%; transform:translateX(-50%); bottom:24px; background:rgba(0,0,0,0.85); color:#fff; padding:8px 12px; border-radius:10px; display:none; }
+    .toast.show{ display:block; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-labelledby="reset-title">
+      <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
+        <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#6d4c41);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">QL</div>
+        <div>
+          <h1 id="reset-title">Đặt lại mật khẩu</h1>
+          <p id="subText">Vui lòng nhập mật khẩu mới. Liên kết đặt lại có hiệu lực trong phiên demo này.</p>
+        </div>
+      </div>
+
+      <div id="status" class="help" aria-live="polite"></div>
+
+      <form id="resetForm" style="margin-top:10px;">
+        <div class="field">
+          <label for="newPwd" style="display:block;margin-bottom:6px;">Mật khẩu mới</label>
+          <input id="newPwd" type="password" autocomplete="new-password" required minlength="8">
+        </div>
+        <div class="field">
+          <label for="confirmPwd" style="display:block;margin-bottom:6px;">Xác nhận mật khẩu</label>
+          <input id="confirmPwd" type="password" autocomplete="new-password" required minlength="8">
+          <div id="pwdErr" class="error" aria-live="polite"></div>
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:space-between; margin-top:8px;">
+          <button type="submit" class="btn">Đặt lại mật khẩu</button>
+          <button type="button" id="backLogin" class="btn secondary">Quay về đăng nhập</button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function(){
+      const params = new URLSearchParams(location.search);
+      const token = params.get('token') || '';
+      const email = params.get('email') || '';
+      const status = document.getElementById('status');
+      const form = document.getElementById('resetForm');
+      const newPwd = document.getElementById('newPwd');
+      const confirmPwd = document.getElementById('confirmPwd');
+      const pwdErr = document.getElementById('pwdErr');
+      const toast = document.getElementById('toast');
+      const backLogin = document.getElementById('backLogin');
+
+      function showToast(t, time=2200){ toast.textContent = t; toast.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(()=> toast.classList.remove('show'), time); }
+
+      if(!token || !email){
+        status.textContent = 'Liên kết không hợp lệ hoặc thiếu thông tin. Vui lòng yêu cầu lại đặt lại mật khẩu.';
+        form.style.display = 'none';
+      } else {
+        // verify token against localStorage (frontend demo)
+        const stored = localStorage.getItem('resetToken::' + email.toLowerCase());
+        let ok = false;
+        try{
+          if(stored){
+            const obj = JSON.parse(stored);
+            if(obj && obj.token === token) ok = true;
+          }
+        } catch(e){ /* ignore */ }
+
+        if(!ok){
+          status.innerHTML = 'Token không hợp lệ hoặc đã hết hạn (demo). Vui lòng thực hiện lại yêu cầu đặt lại.';
+          form.style.display = 'none';
+        } else {
+          status.textContent = 'Liên kết hợp lệ cho ' + email + '. Vui lòng nhập mật khẩu mới.';
+        }
+      }
+
+      function validatePasswords(){
+        pwdErr.textContent = '';
+        const a = newPwd.value || '';
+        const b = confirmPwd.value || '';
+        if(a.length < 8) { pwdErr.textContent = 'Mật khẩu phải có ít nhất 8 ký tự.'; return false; }
+        if(a !== b){ pwdErr.textContent = 'Mật khẩu xác nhận không khớp.'; return false; }
+        return true;
+      }
+
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        if(!validatePasswords()) return;
+        // simulate reset request
+        showToast('Đang đặt lại mật khẩu...', 1200);
+        setTimeout(()=>{
+          // frontend-demo: remove stored token and optionally mark password changed
+          localStorage.removeItem('resetToken::' + email.toLowerCase());
+          // optionally store a flag that password was changed
+          localStorage.setItem('pwChanged::' + email.toLowerCase(), Date.now());
+          showToast('Đặt lại mật khẩu thành công', 1500);
+          setTimeout(()=> location.href = './login.html', 900);
+        }, 900);
+      });
+
+      backLogin.addEventListener('click', ()=> location.href = './login.html');
+
+      [newPwd, confirmPwd].forEach(inp => inp.addEventListener('input', ()=> { pwdErr.textContent=''; }));
+    })();
+  </script>
+</body>
+</html>

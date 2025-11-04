@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đăng nhập - QLTT_LopHoc</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-labelledby="signin-title">
+      <div class="header">
+        <div class="logo" aria-hidden="true">QL</div>
+        <div class="brand">
+          <h1 id="signin-title">QLTT Lớp Học</h1>
+          <p>Đăng nhập để quản lý thông tin lớp</p>
+        </div>
+      </div>
+
+      <!-- Role Selector -->
+      <div class="role-tabs">
+        <button type="button" class="role-tab active" data-role="student">
+          🎓 Sinh viên
+        </button>
+        <button type="button" class="role-tab" data-role="teacher">
+          👨‍🏫 Giảng viên
+        </button>
+      </div>
+
+      <!-- Demo Info Box -->
+      <div class="demo-info" id="demoInfo">
+        <h3>🎓 Tài khoản Demo - Sinh viên</h3>
+        <div class="demo-credentials">
+          <div><strong>Email:</strong> student1@example.com</div>
+          <div><strong>Mật khẩu:</strong> studentpass</div>
+        </div>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <input id="email" name="email" type="email" placeholder=" " autocomplete="username" required>
+          <label for="email">Email</label>
+          <div id="emailErr" class="error" aria-live="polite"></div>
+        </div>
+
+        <div class="field" style="position:relative;">
+          <input id="password" name="password" type="password" placeholder=" " autocomplete="current-password" required minlength="8">
+          <label for="password">Mật khẩu</label>
+          <button id="pwdToggle" type="button" aria-label="Hiển thị mật khẩu" aria-pressed="false">
+            Hiện
+          </button>
+          <div id="pwdErr" class="error" aria-live="polite"></div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn" id="submitBtn">Đăng nhập</button>
+          <button type="button" class="btn secondary" id="demoBtn" title="Sử dụng tài khoản demo">Demo</button>
+        </div>
+
+        <div class="note">
+          Chưa có tài khoản? Liên hệ admin để được cấp.
+        </div>
+
+        <div style="text-align:center; margin-top:8px;">
+          <a href="#" id="forgotLink" style="color:var(--accent); font-weight:600; text-decoration:none;">Quên mật khẩu?</a>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div id="forgotModal" aria-hidden="true" class="forgot-modal" role="dialog" aria-labelledby="fp-title">
+    <div class="forgot-card" role="document">
+      <h2 id="fp-title">Yêu cầu đặt lại mật khẩu</h2>
+      <p>Nhập email để nhận liên kết đặt lại mật khẩu (demo frontend).</p>
+      <div style="display:flex; gap:8px; margin-bottom:8px;">
+        <input id="fpEmail" type="email" placeholder="Email" style="flex:1; padding:10px 12px; border-radius:8px; border:1px solid rgba(16,24,40,0.08);">
+        <button id="fpSend" class="btn" style="padding:10px 12px;">Gửi</button>
+      </div>
+      <div id="fpMsg" class="help" aria-live="polite"></div>
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+        <button id="fpClose" class="btn secondary">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="login.js"></script>
+  <!-- Thêm trước <script src="login.js"></script> -->
+<script src="assets/js/api.js"></script>
+<script src="login.js"></script>
+</body>
+</html>

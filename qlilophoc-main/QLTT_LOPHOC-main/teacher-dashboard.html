@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giảng viên - QLTT Lớp học</title>
+  <link rel="stylesheet" href="teacher-dashboard.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">GV</div>
+        <div class="brand-text">
+          <h1>QLTT Lớp học</h1>
+          <p>Quản lý giảng viên</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-section="dashboard">
+          <span>📊</span> Tổng quan
+        </button>
+        <button class="nav-item" data-section="students">
+          <span>👥</span> Quản lý sinh viên
+        </button>
+        <button class="nav-item" data-section="grades">
+          <span>📝</span> Quản lý điểm số
+        </button>
+        <button class="nav-item" data-section="attendance">
+          <span>✓</span> Điểm danh
+        </button>
+        <button class="nav-item" data-section="documents">
+          <span>📄</span> Tài liệu
+        </button>
+        <button class="nav-item" data-section="notifications">
+          <span>🔔</span> Thông báo
+        </button>
+      </nav>
+
+      <div class="profile-section">
+        <div class="profile-info">
+          <div class="avatar" id="teacherAvatar">GV</div>
+          <div>
+            <div class="profile-name" id="teacherName">Giảng viên</div>
+            <div class="profile-role">Giảng viên</div>
+          </div>
+        </div>
+        <button class="logout-btn" id="logoutBtn" type="button">Đăng xuất</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Dashboard Section -->
+      <section id="dashboard-section" class="content-section active">
+        <div class="header">
+          <h2>Tổng quan</h2>
+          <p>Chào mừng trở lại, hệ thống quản lý lớp học</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="totalStudents">0</div>
+            <div class="stat-label">Tổng sinh viên</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="totalClasses">0</div>
+            <div class="stat-label">Lớp học</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="avgGrade">0</div>
+            <div class="stat-label">Điểm trung bình</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="attendanceRate">0%</div>
+            <div class="stat-label">Tỷ lệ chuyên cần</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Hoạt động gần đây</h3>
+          </div>
+          <div id="recentActivities"></div>
+        </div>
+      </section>
+
+      <!-- Students Section -->
+      <section id="students-section" class="content-section">
+        <div class="header">
+          <h2>Quản lý sinh viên</h2>
+          <p>Danh sách và thông tin sinh viên</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Danh sách sinh viên</h3>
+            <button class="btn btn-primary" id="addStudentBtn">+ Thêm sinh viên</button>
+          </div>
+          
+          <div class="search-box">
+            <input type="text" id="searchStudent" placeholder="Tìm kiếm sinh viên..." class="search-input">
+          </div>
+
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Mã SV</th>
+                  <th>Họ tên</th>
+                  <th>Email</th>
+                  <th>Lớp</th>
+                  <th>Điểm TB</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grades Section -->
+      <section id="grades-section" class="content-section">
+        <div class="header">
+          <h2>Quản lý điểm số</h2>
+          <p>Nhập và cập nhật điểm cho sinh viên</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Bảng điểm</h3>
+            <button class="btn btn-primary" id="addGradeBtn">+ Nhập điểm</button>
+          </div>
+
+          <div class="filter-group">
+            <select id="classFilter" class="filter-select">
+              <option value="">Tất cả lớp</option>
+            </select>
+            <select id="subjectFilter" class="filter-select">
+              <option value="">Tất cả môn học</option>
+            </select>
+          </div>
+
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Mã SV</th>
+                  <th>Họ tên</th>
+                  <th>Môn học</th>
+                  <th>Điểm GK</th>
+                  <th>Điểm CK</th>
+                  <th>Điểm TB</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="gradesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Attendance Section -->
+      <section id="attendance-section" class="content-section">
+        <div class="header">
+          <h2>Điểm danh</h2>
+          <p>Quản lý chuyên cần sinh viên</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Điểm danh hôm nay</h3>
+            <button class="btn btn-success" id="saveAttendanceBtn">💾 Lưu điểm danh</button>
+          </div>
+
+          <div class="attendance-date">
+            <label>Ngày: </label>
+            <input type="date" id="attendanceDate" class="date-input">
+            <select id="attendanceClass" class="filter-select">
+              <option value="">Chọn lớp</option>
+            </select>
+          </div>
+
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Mã SV</th>
+                  <th>Họ tên</th>
+                  <th>Lớp</th>
+                  <th>
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="checkAll"> Có mặt
+                    </label>
+                  </th>
+                  <th>Ghi chú</th>
+                </tr>
+              </thead>
+              <tbody id="attendanceTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Documents Section -->
+      <section id="documents-section" class="content-section">
+        <div class="header">
+          <h2>Tài liệu</h2>
+          <p>Chia sẻ tài liệu học tập với sinh viên</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Danh sách tài liệu</h3>
+            <button class="btn btn-primary" id="uploadDocBtn">📤 Tải lên tài liệu</button>
+          </div>
+
+          <div class="documents-grid" id="documentsGrid"></div>
+        </div>
+      </section>
+
+      <!-- Notifications Section -->
+      <section id="notifications-section" class="content-section">
+        <div class="header">
+          <h2>Thông báo</h2>
+          <p>Gửi thông báo đến sinh viên</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Tạo thông báo mới</h3>
+          </div>
+
+          <div class="notification-form">
+            <div class="form-group">
+              <label>Tiêu đề</label>
+              <input type="text" id="notifTitle" class="form-input" placeholder="Nhập tiêu đề thông báo">
+            </div>
+            <div class="form-group">
+              <label>Nội dung</label>
+              <textarea id="notifContent" class="form-textarea" rows="5" placeholder="Nhập nội dung thông báo"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Gửi đến</label>
+              <select id="notifTarget" class="form-input">
+                <option value="all">Tất cả sinh viên</option>
+                <option value="class">Theo lớp</option>
+              </select>
+            </div>
+            <div class="form-group" id="classSelectGroup" style="display:none;">
+              <label>Chọn lớp</label>
+              <select id="notifClass" class="form-input"></select>
+            </div>
+            <button class="btn btn-primary btn-lg" id="sendNotifBtn">📤 Gửi thông báo</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Lịch sử thông báo</h3>
+          </div>
+          <div id="notificationHistory"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <!-- Add Student Modal -->
+  <div id="addStudentModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Thêm sinh viên mới</h3>
+        <button class="close-btn" data-modal="addStudentModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Mã sinh viên</label>
+          <input type="text" id="studentId" class="form-input" placeholder="VD: SV001">
+        </div>
+        <div class="form-group">
+          <label>Họ tên</label>
+          <input type="text" id="studentName" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="studentEmail" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Lớp</label>
+          <input type="text" id="studentClass" class="form-input">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-modal="addStudentModal">Hủy</button>
+        <button class="btn btn-primary" id="saveStudentBtn">Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Grade Modal -->
+  <div id="addGradeModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Nhập điểm</h3>
+        <button class="close-btn" data-modal="addGradeModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Sinh viên</label>
+          <select id="gradeStudentId" class="form-input"></select>
+        </div>
+        <div class="form-group">
+          <label>Môn học</label>
+          <input type="text" id="gradeSubject" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Điểm giữa kỳ</label>
+          <input type="number" id="gradeMidterm" class="form-input" min="0" max="10" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>Điểm cuối kỳ</label>
+          <input type="number" id="gradeFinal" class="form-input" min="0" max="10" step="0.1">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-modal="addGradeModal">Hủy</button>
+        <button class="btn btn-primary" id="saveGradeBtn">Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload Document Modal -->
+  <div id="uploadDocModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Tải lên tài liệu</h3>
+        <button class="close-btn" data-modal="uploadDocModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Tên tài liệu</label>
+          <input type="text" id="docName" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Mô tả</label>
+          <textarea id="docDescription" class="form-textarea" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Môn học</label>
+          <input type="text" id="docSubject" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Loại tài liệu</label>
+          <select id="docType" class="form-input">
+            <option value="lecture">Bài giảng</option>
+            <option value="exercise">Bài tập</option>
+            <option value="exam">Đề thi</option>
+            <option value="reference">Tài liệu tham khảo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>File (demo - không upload thật)</label>
+          <input type="file" id="docFile" class="form-input">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-modal="uploadDocModal">Hủy</button>
+        <button class="btn btn-primary" id="saveDocBtn">Tải lên</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="teacher-dashboard.js"></script>
+</body>
+</html>
