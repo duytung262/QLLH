@@ -24,6 +24,7 @@ jobs:
           context: .
           push: true
           tags: gnutnahn/qltt-lophoc:latest
+          # CI/CD Pipeline - Updated
 
       - name: Deploy to Render
         run: |
